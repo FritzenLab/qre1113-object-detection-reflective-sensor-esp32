@@ -1,14 +1,23 @@
 int analogValue= 0;
+long sensorTime= 0;
 
 void setup() {
-  // put your setup code here, to run once:
+  
   Serial.begin(115200);
-  //pinMode(D1, INPUT);
+  pinMode(D8, OUTPUT);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  analogValue= analogRead(A2);
-  Serial.println(analogValue);
-  delay(50);
+  
+  if(millis() - sensorTime > 50){
+    sensorTime= millis();
+    analogValue= analogRead(A2);
+    Serial.println(analogValue);
+    if(analogValue < 2000){
+      digitalWrite(D8, HIGH);
+    }else{
+      digitalWrite(D8, LOW);
+    }
+  } 
+  
 }
